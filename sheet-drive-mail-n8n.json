@@ -1,0 +1,144 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1jPoGq1g5cmFeDTf-NoGMEzvkU94Bb9rkami0nsSPJGc",
+          "mode": "list",
+          "cachedResultName": "Lead Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jPoGq1g5cmFeDTf-NoGMEzvkU94Bb9rkami0nsSPJGc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jPoGq1g5cmFeDTf-NoGMEzvkU94Bb9rkami0nsSPJGc/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "id": "d5c7d77d-7ca7-4957-8735-75dc5c5a47a1",
+      "name": "On Row Added",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        304
+      ],
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "koyCwSuUGUL74kJa",
+          "name": "Google Sheets Trigger OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $json.Status }} - Project Files",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {
+          "simplifyOutput": false
+        }
+      },
+      "id": "cb36fc2a-4c1f-4608-b8d0-477be31266a9",
+      "name": "Create Folder",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        464,
+        304
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "kD8P2V7Sk2ex7fLg",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $(\"On Row Added\").item.json.Email }}",
+        "subject": "Onboarding Folder Ready",
+        "message": "=Hello {{ $(\"On Row Added\").item.json.Name }},<br><br>Your onboarding architecture is ready.<br><br>You can access your private upload folder here: {{ $json.webViewLink }}",
+        "options": {}
+      },
+      "id": "15489595-02a5-4a61-907c-207b256427b9",
+      "name": "Send Onboarding Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        304
+      ],
+      "webhookId": "b34be2b8-ac1a-47ed-8f32-302e333ab851",
+      "notesInFlow": false,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MuqvKPCNWcxpQimi",
+          "name": "Gmail account 2"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On Row Added": {
+      "main": [
+        [
+          {
+            "node": "Create Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Folder": {
+      "main": [
+        [
+          {
+            "node": "Send Onboarding Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "338e1c90-2729-4d7e-85af-6ec61e4ca0b5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "16f03c53b797e457b951511510a9ee2f5f6f6d21a63f5cff6a03c17495b4106c"
+  },
+  "nodeGroups": [],
+  "id": "nLuLly2fd0El0iDL",
+  "tags": []
+}
