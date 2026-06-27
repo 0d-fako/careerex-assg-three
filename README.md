@@ -33,3 +33,8 @@ This workflow automates the entire process instantly when a new row is added to 
 ### Step 2: Google Drive Create Folder
 - **Node**: `Create Folder`
 - **Dynamic Naming**:  
+
+## Walkthrough Video
+
+You can watch the full demo here:  
+[▶️ Loom Video Walkthrough](https://www.loom.com/share/8d2c1afc23a14f42888c361d4b100cb4)
